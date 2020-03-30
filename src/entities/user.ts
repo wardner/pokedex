@@ -1,5 +1,7 @@
-import {Entity, Column, PrimaryGeneratedColumn, BeforeInsert} from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, BeforeInsert, OneToMany, JoinTable, JoinColumn } from 'typeorm';
 import bcrypt from 'bcryptjs';
+import { Pokemon } from './pokemon';
+import { getPokes } from '../controllers/pokemon.controllers';
 
 
 enum genres {
@@ -53,10 +55,16 @@ export class User {
     })
     gender: genres;
 
+    @OneToMany(type => Pokemon, pokes => Pokemon, {})
+    pokes: Pokemon[];
+
     @BeforeInsert()
     async encryptPassword() {
-        const hash = await bcrypt.hashSync(this.password, 10);
+        const hash = bcrypt.hashSync(this.password, 10);
         this.password = hash;
         return this.password;
     }
+
+    comparePassword = async (password: string): Promise<boolean> =>
+        bcrypt.compareSync(password, this.password);
 }

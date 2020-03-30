@@ -10,7 +10,8 @@ const config = {
     synchronize: true,
     logging: false,
     ssl: process.env.SSL,
-    entities: ["build/src/database/entities/**/*.js"],
+    entities: ["dist/entities/**/*.js"]
 };
+
 
 module.exports = config;

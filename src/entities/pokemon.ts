@@ -1,5 +1,6 @@
-import {Entity, Column, PrimaryGeneratedColumn, ManyToMany, JoinTable} from 'typeorm';
+import {Entity, Column, PrimaryGeneratedColumn, ManyToMany, JoinTable, ManyToOne, JoinColumn} from 'typeorm';
 import { Type } from './type';
+import { User } from './user';
 
 @Entity()
 export class Pokemon{
@@ -36,5 +37,8 @@ export class Pokemon{
     })
     @JoinTable()
     types: Type[];
+
+    @ManyToOne(type => User, user => user.id)
+    user: User;
 
 }

@@ -4,7 +4,7 @@ import { getRepository } from 'typeorm';
 import { Type } from '../entities/type';
 
 export const getPokes = async (req: Request, res: Response): Promise<Response> => {
-    const pokes = await getRepository(Pokemon).find({relations: ['types']});
+    const pokes = await getRepository(Pokemon).find();
     return res.status(200).json(pokes);
 }
 
